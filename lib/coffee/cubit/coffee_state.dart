@@ -38,8 +38,3 @@ class CoffeeState extends Equatable {
   @override
   List<Object?> get props => [status, currentCoffee];
 }
-
-// class CoffeeInitial extends CoffeeState {
-//   @override
-//   List<Object> get props => [];
-// }
