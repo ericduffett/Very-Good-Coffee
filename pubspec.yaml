@@ -9,12 +9,20 @@ environment:
 
 dependencies:
   bloc: ^8.1.0
+  coffee_api:
+    path: packages/coffee_api
+  coffee_repository:
+    path: packages/coffee_repository
   flutter:
     sdk: flutter
   flutter_bloc: ^8.1.1
   flutter_localizations:
     sdk: flutter
   intl: ^0.17.0
+  local_storage_coffee_api:
+    path: packages/local_storage_coffee_api
+
+
 
 dev_dependencies:
   bloc_test: ^9.1.0
