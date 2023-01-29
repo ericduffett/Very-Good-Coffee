@@ -3,5 +3,17 @@
     "counterAppBarTitle": "Contador",
     "@counterAppBarTitle": {
         "description": "Texto mostrado en la AppBar de la página del contador"
+    },
+    "newCoffeeButtonText": "New Coffee",
+    "@newCoffeeButtonText": {
+         "description": "Text shown in the reload coffee image button"
+    },
+    "coffeeSavedSnackBarText": "Coffee Saved",
+    "@coffeeSavedSnackBarText": {
+        "description": "Text shown in SnackBar when a coffee is saved"
+    },
+    "viewSavedCoffeeRemoveCoffeeButtonText": "Remove",
+    "@viewSavedCoffeeRemoveCoffeeButtonText": {
+        "description": "Text shown in the remove coffee button"
     }
 }

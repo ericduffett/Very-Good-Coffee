@@ -18,7 +18,7 @@ class CoffeeApi {
   ///Requests a random coffee url from coffee.alexflipnote.dev.
   Future<Coffee> _generateRandomCoffee() async {
     final url = Uri.https(
-      'https://coffee.alexflipnote.dev',
+      'coffee.alexflipnote.dev',
       '/random.json',
     );
     final coffeeRequest = await _httpClient.get(url);
@@ -38,7 +38,7 @@ class CoffeeApi {
   ///Exposes a public method that returns an instance of coffee data that
   ///contains the image data as [Uint8List] and a uid [String]
   Future<CoffeeData> getCoffeeData() async {
-    //TODO: Functions below could throw?
+    //TODO: Functions below could throw. Do we need try catch?
     final coffee = await _generateRandomCoffee();
     final data = await _getCoffeeImageAsData(coffee);
     final uid = _extractUID(coffee.file);
@@ -61,8 +61,7 @@ class CoffeeApi {
   ///Given an instance of coffee, returns image data as bytes.
   Future<Uint8List> _getCoffeeImageAsData(Coffee coffee) async {
     final randomCoffee = await _generateRandomCoffee();
-    final uri = Uri.https(randomCoffee.file);
-    final coffeeImageRequest = await http.get(uri);
+    final coffeeImageRequest = await http.get(randomCoffee.url);
 
     if (coffeeImageRequest.statusCode != 200) {
       throw CoffeeRequestFailure();

@@ -22,5 +22,5 @@ Coffee _$CoffeeFromJson(Map<String, dynamic> json) => $checkedCreate(
 
 Map<String, dynamic> _$CoffeeToJson(Coffee instance) => <String, dynamic>{
       'uid': instance.uid,
-      'image_data': instance._imageData,
+      'image_data': instance.imageData,
     };

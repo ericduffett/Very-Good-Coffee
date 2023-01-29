@@ -6,6 +6,8 @@ import 'package:coffee_repository/coffee_repository.dart' as coffee_repository;
 import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
 
+import 'json_map.dart';
+
 part 'coffee.g.dart';
 
 @JsonSerializable()
@@ -15,8 +17,8 @@ class Coffee extends Equatable {
     required List<int> imageData,
   }) : _imageData = imageData;
 
-  factory Coffee.fromJson(Map<String, dynamic> json) =>
-    _$CoffeeFromJson(json);
+  // factory Coffee.fromJson(Map<String, dynamic> json) =>
+  //     _$CoffeeFromJson(json);
 
   factory Coffee.fromRepository(coffee_repository.Coffee coffee) {
     return Coffee(
@@ -25,10 +27,13 @@ class Coffee extends Equatable {
     );
   }
 
+
   static const empty = Coffee(
     uid: 'empty',
     imageData: [0],
   );
+
+  static const noFavorites = <Coffee>[];
 
 
   final String uid;
@@ -53,6 +58,10 @@ class Coffee extends Equatable {
   @override
   List<Object?> get props => [uid, _imageData];
 
-  Map<String, dynamic> toJSon() => _$CoffeeToJson(this);
+  /// Deserializes the given [JsonMap] into a [Coffee].
+  static Coffee fromJson(JsonMap json) => _$CoffeeFromJson(json);
+
+  /// Converts this [Coffee] into a [JsonMap].
+  JsonMap toJson() => _$CoffeeToJson(this);
 
 }

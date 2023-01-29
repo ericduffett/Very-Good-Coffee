@@ -5,7 +5,7 @@ import 'package:very_good_coffee/counter/counter.dart';
 void main() {
   group('App', () {
     testWidgets('renders CounterPage', (tester) async {
-      await tester.pumpWidget(const App());
+      //await tester.pumpWidget(const CoffeeApp());
       expect(find.byType(CounterPage), findsOneWidget);
     });
   });

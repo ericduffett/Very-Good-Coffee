@@ -16,14 +16,30 @@ CoffeeState _$CoffeeStateFromJson(Map<String, dynamic> json) => $checkedCreate(
               (v) =>
                   $enumDecodeNullable(_$CoffeeStatusEnumMap, v) ??
                   CoffeeStatus.initial),
+          savedCoffees: $checkedConvert(
+              'saved_coffees',
+              (v) => (v as List<dynamic>?)
+                  ?.map((e) => Coffee.fromJson(e as Map<String, dynamic>))
+                  .toList()),
+          selectedCoffee: $checkedConvert(
+              'selected_coffee',
+              (v) => v == null
+                  ? null
+                  : Coffee.fromJson(v as Map<String, dynamic>)),
         );
         return val;
+      },
+      fieldKeyMap: const {
+        'savedCoffees': 'saved_coffees',
+        'selectedCoffee': 'selected_coffee'
       },
     );
 
 Map<String, dynamic> _$CoffeeStateToJson(CoffeeState instance) =>
     <String, dynamic>{
       'status': _$CoffeeStatusEnumMap[instance.status]!,
+      'saved_coffees': instance.savedCoffees.map((e) => e.toJson()).toList(),
+      'selected_coffee': instance.selectedCoffee.toJson(),
     };
 
 const _$CoffeeStatusEnumMap = {

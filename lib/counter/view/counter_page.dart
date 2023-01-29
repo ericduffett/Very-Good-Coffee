@@ -1,3 +1,4 @@
+import 'package:coffee_repository/coffee_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:very_good_coffee/counter/counter.dart';
@@ -23,7 +24,21 @@ class CounterView extends StatelessWidget {
     final l10n = context.l10n;
     return Scaffold(
       appBar: AppBar(title: Text(l10n.counterAppBarTitle)),
-      body: const Center(child: CounterText()),
+      body: FutureBuilder(
+        future: CoffeeRepository().getRandomCoffee(),
+        builder: (context, coffee) {
+          if (coffee.hasData) {
+            return Center(
+              child: Image.memory(coffee.data!.imageData),
+            );
+          } else if (coffee.hasError) {
+            return const Text('Oopsie Doopsie');
+          }else {
+            return const CircularProgressIndicator();
+          }
+
+        },
+      ),
       floatingActionButton: Column(
         mainAxisAlignment: MainAxisAlignment.end,
         crossAxisAlignment: CrossAxisAlignment.end,
@@ -53,3 +68,4 @@ class CounterText extends StatelessWidget {
     return Text('$count', style: theme.textTheme.headline1);
   }
 }
+
