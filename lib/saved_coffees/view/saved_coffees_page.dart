@@ -8,8 +8,6 @@ class SavedCoffeesPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    //final coffeeCubit = context.read<CoffeeCubit>();
-    //final savedCoffees = coffeeCubit.state.savedCoffees;
     return BlocBuilder<CoffeeCubit, CoffeeState>(
       buildWhen: (previous, current) {
         if (previous.savedCoffees.length != current.savedCoffees.length) {
@@ -21,8 +19,6 @@ class SavedCoffeesPage extends StatelessWidget {
       builder: (context, state) {
         return GridView.count(
           crossAxisCount: 3,
-          //crossAxisSpacing: 16,
-          //mainAxisSpacing: 16,
           children: List.generate(
               state.savedCoffees.isEmpty ? 1 : state.savedCoffees.length,
                   (index) {
