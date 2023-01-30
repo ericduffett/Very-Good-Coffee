@@ -23,7 +23,7 @@ class ViewSavedCoffeePage extends StatelessWidget {
 }
 
 class SavedCoffeeView extends StatelessWidget {
-  const SavedCoffeeView({Key? key}) : super(key: key);
+  const SavedCoffeeView({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -50,7 +50,7 @@ class SavedCoffeeView extends StatelessWidget {
 }
 
 class DeleteSavedCoffeeButton extends StatelessWidget {
-  const DeleteSavedCoffeeButton({Key? key}) : super(key: key);
+  const DeleteSavedCoffeeButton({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -65,5 +65,3 @@ class DeleteSavedCoffeeButton extends StatelessWidget {
     );
   }
 }
-
-

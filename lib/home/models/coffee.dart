@@ -1,12 +1,9 @@
 
 import 'dart:typed_data';
-
-import 'package:coffee_repository/coffee_repository.dart' hide Coffee;
 import 'package:coffee_repository/coffee_repository.dart' as coffee_repository;
 import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
-
-import 'json_map.dart';
+import 'package:very_good_coffee/home/models/json_map.dart';
 
 part 'coffee.g.dart';
 
@@ -15,7 +12,9 @@ class Coffee extends Equatable {
   const Coffee({
     required this.uid,
     required List<int> imageData,
-  }) : _imageData = imageData;
+    bool? isLiked,
+  }) : _imageData = imageData,
+        isLiked = isLiked ?? false;
 
   // factory Coffee.fromJson(Map<String, dynamic> json) =>
   //     _$CoffeeFromJson(json);
@@ -31,6 +30,7 @@ class Coffee extends Equatable {
   static const empty = Coffee(
     uid: 'empty',
     imageData: [0],
+    isLiked: false,
   );
 
   static const noFavorites = <Coffee>[];
@@ -41,6 +41,10 @@ class Coffee extends Equatable {
   ///Stores image data as JSONSerializable List<int>
   final List<int> _imageData;
 
+  ///Stores whether the user has saved this image
+  final bool isLiked;
+
+
   ///Getter that converts List<int> to [Uint8List] that can be used with
   ///Image.memory widget in Flutter
   Uint8List get imageData => Uint8List.fromList(_imageData);
@@ -48,15 +52,17 @@ class Coffee extends Equatable {
   Coffee copyWith({
     String? uid,
     List<int>? imageData,
+    bool? isLiked,
   }) {
     return Coffee(
       uid: uid ?? this.uid,
       imageData: imageData ?? _imageData,
+      isLiked: isLiked ?? this.isLiked,
     );
   }
 
   @override
-  List<Object?> get props => [uid, _imageData];
+  List<Object?> get props => [uid, _imageData, isLiked];
 
   /// Deserializes the given [JsonMap] into a [Coffee].
   static Coffee fromJson(JsonMap json) => _$CoffeeFromJson(json);

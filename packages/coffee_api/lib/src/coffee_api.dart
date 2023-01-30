@@ -38,7 +38,7 @@ class CoffeeApi {
   ///Exposes a public method that returns an instance of coffee data that
   ///contains the image data as [Uint8List] and a uid [String]
   Future<CoffeeData> getCoffeeData() async {
-    //TODO: Functions below could throw. Do we need try catch?
+    // TODO(ericduffett): Functions below could throw. Do we need try catch?
     final coffee = await _generateRandomCoffee();
     final data = await _getCoffeeImageAsData(coffee);
     final uid = _extractUID(coffee.file);

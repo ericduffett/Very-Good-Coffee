@@ -14,10 +14,16 @@ class CoffeeCubit extends HydratedCubit<CoffeeState> {
   final CoffeeRepository _coffeeRepository;
 
   void deleteCoffee() {
+    final currentCoffee = state.currentCoffee.copyWith(
+      isLiked: state.currentCoffee != state.selectedCoffee,
+    );
+
     final savedCoffees = state.savedCoffees.map((c) => c).toList()
-    ..removeWhere((coffee) => coffee.uid == state.selectedCoffee.uid);
+      ..removeWhere((coffee) => coffee.uid == state.selectedCoffee.uid);
+
     emit(
       state.copyWith(
+        coffee: currentCoffee,
         savedCoffees: savedCoffees,
         selectedCoffee: Coffee.empty,
       ),
@@ -30,6 +36,7 @@ class CoffeeCubit extends HydratedCubit<CoffeeState> {
       final coffee = Coffee.fromRepository(
         await _coffeeRepository.getRandomCoffee(),
       );
+
       emit(state.copyWith(
         status: CoffeeStatus.success,
         coffee: coffee,
@@ -44,16 +51,18 @@ class CoffeeCubit extends HydratedCubit<CoffeeState> {
   Future<void> saveCurrentCoffee() async {
 
     final savedCoffees = state.savedCoffees.map((c) => c).toList();
+    final currentCoffee = state.currentCoffee.copyWith(
+      isLiked: true,
+    );
 
     if (!savedCoffees.contains(state.currentCoffee)) {
-      savedCoffees.add(state.currentCoffee);
-    } else {
-      print("did not add duplicate coffee");
+      savedCoffees.add(currentCoffee);
     }
 
     emit(
       state.copyWith(
         savedCoffees: savedCoffees,
+        coffee: currentCoffee,
       ),
     );
   }

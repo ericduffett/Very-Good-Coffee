@@ -35,7 +35,7 @@ class CoffeeState extends Equatable {
     List<Coffee>? savedCoffees,
     Coffee? selectedCoffee,
 }) {
-   // print('you have $savedCoffees saved coffeees');
+
     return CoffeeState(
       status: status ?? this.status,
       coffee: coffee ?? currentCoffee,
