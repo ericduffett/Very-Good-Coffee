@@ -1,4 +1,6 @@
-part of 'coffee_cubit.dart';
+part of '../../coffee/cubit/coffee_cubit.dart';
+
+
 
 enum CoffeeStatus {initial, loading, success, failure}
 

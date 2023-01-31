@@ -3,7 +3,7 @@ import 'dart:typed_data';
 import 'package:coffee_repository/coffee_repository.dart' as coffee_repository;
 import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
-import 'package:very_good_coffee/home/models/json_map.dart';
+import 'package:very_good_coffee/coffee/models/json_map.dart';
 
 part 'coffee.g.dart';
 

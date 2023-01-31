@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:very_good_coffee/home/cubit/coffee_cubit.dart';
-import 'package:very_good_coffee/saved_coffees/view/view_saved_coffee_page.dart';
+import 'package:very_good_coffee/coffee/cubit/coffee_cubit.dart';
+import 'package:very_good_coffee/saved_coffees/view/single_saved_coffee_view.dart';
 
 class SavedCoffeesPage extends StatelessWidget {
   const SavedCoffeesPage({super.key});
@@ -31,10 +31,10 @@ class SavedCoffeesPage extends StatelessWidget {
                   onTap: () {
                     context.read<CoffeeCubit>().selectCoffee(index);
                     Navigator.of(context).push(
-                      MaterialPageRoute<SavedCoffeeView>(builder: (context2) {
+                      MaterialPageRoute<SingleSavedCoffeeView>(builder: (context2) {
                         return BlocProvider<CoffeeCubit>.value(
                           value: context.read<CoffeeCubit>(),
-                          child: const SavedCoffeeView(),
+                          child: const SingleSavedCoffeeView(),
                         );
                       },),
                     );

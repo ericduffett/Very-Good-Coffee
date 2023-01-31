@@ -1,29 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:very_good_coffee/home/cubit/coffee_cubit.dart';
+import 'package:very_good_coffee/coffee/cubit/coffee_cubit.dart';
 import 'package:very_good_coffee/l10n/l10n.dart';
 
-class ViewSavedCoffeePage extends StatelessWidget {
-  const ViewSavedCoffeePage({super.key});
-
-  //  static Route<void> route(CoffeeCubit blocValue) {
-  //   return MaterialPageRoute<ViewSavedCoffeePage>(
-  //     builder: (context2) {
-  //       return BlocProvider<CoffeeCubit>.value(
-  //         value: blocValue,
-  //         child: const ViewSavedCoffeePage(),
-  //       );
-  //     },
-  //   );
-  // }
-  @override
-  Widget build(BuildContext context) {
-    return const SavedCoffeeView();
-  }
-}
-
-class SavedCoffeeView extends StatelessWidget {
-  const SavedCoffeeView({super.key});
+class SingleSavedCoffeeView extends StatelessWidget {
+  const SingleSavedCoffeeView({super.key});
 
   @override
   Widget build(BuildContext context) {

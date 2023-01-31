@@ -1,96 +1,7 @@
-
-import 'package:coffee_repository/coffee_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:very_good_coffee/home/cubit/coffee_cubit.dart';
-import 'package:very_good_coffee/home/cubit/home_cubit.dart';
+import 'package:very_good_coffee/coffee/cubit/coffee_cubit.dart';
 import 'package:very_good_coffee/l10n/l10n.dart';
-import 'package:very_good_coffee/saved_coffees/view/saved_coffees_page.dart';
-
-
-class HomePage extends StatelessWidget {
-  const HomePage({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return MultiBlocProvider(
-      providers: [
-        BlocProvider<HomeCubit>(
-          create: (_) => HomeCubit(),
-        ),
-        BlocProvider<CoffeeCubit>(
-          create: (_) =>
-          CoffeeCubit(context.read<CoffeeRepository>())
-            ..fetchCoffeeImage(),),
-      ],
-      child: const HomeView(),
-    );
-  }
-}
-
-class HomeView extends StatelessWidget {
-  const HomeView({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    final l10n = context.l10n;
-    final selectedTab = context.select((HomeCubit cubit) => cubit.state.tab);
-    return Scaffold(
-      appBar: AppBar(title: Text(l10n.counterAppBarTitle),
-      ),
-      body: IndexedStack(
-        index: selectedTab.index,
-        children: const [CoffeePage(), SavedCoffeesPage()],),
-      bottomNavigationBar: BottomAppBar(
-        shape: const CircularNotchedRectangle(),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            _HomeTabButton(
-              groupValue: selectedTab,
-              value: HomeTab.home,
-              icon: Icon(selectedTab == HomeTab.home ?
-              Icons.coffee : Icons.coffee_outlined,),
-            ),
-            _HomeTabButton(
-              groupValue: selectedTab,
-              value: HomeTab.saved,
-              icon: Icon(selectedTab == HomeTab.saved ?
-              Icons.favorite : Icons.favorite_border_outlined,),
-            ),
-
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class _HomeTabButton extends StatelessWidget {
-  const _HomeTabButton({
-    required this.groupValue,
-    required this.value,
-    required this.icon,
-  });
-
-  final HomeTab groupValue;
-  final HomeTab value;
-  final Widget icon;
-
-  @override
-  Widget build(BuildContext context) {
-    return IconButton(
-      onPressed: () => context.read<HomeCubit>().setTab(value),
-      iconSize: 32,
-      color:
-      groupValue != value ? null : Theme
-          .of(context)
-          .colorScheme
-          .secondary,
-      icon: icon,
-    );
-  }
-}
 
 class CoffeePage extends StatelessWidget {
   const CoffeePage({super.key});
@@ -107,7 +18,10 @@ class CoffeeView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final width = MediaQuery.of(context).size.width;
+    final width = MediaQuery
+        .of(context)
+        .size
+        .width;
     return Center(
       child: BlocBuilder<CoffeeCubit, CoffeeState>(
         buildWhen: (previous, current) {
@@ -129,7 +43,7 @@ class CoffeeView extends StatelessWidget {
               children: const [
                 Text('Failed to load image.\n'
                     'Please check your internet connection and try again.',
-                textAlign: TextAlign.center,),
+                  textAlign: TextAlign.center,),
                 SizedBox(height: 16,),
                 LoadNewCoffeeButton(),
               ],
@@ -176,17 +90,17 @@ class SaveCoffeeButton extends StatelessWidget {
       listenWhen: (previous, current) =>
       previous.savedCoffees.length < current.savedCoffees.length,
       listener: (context, state) {
-          ScaffoldMessenger.of(context)
-            ..hideCurrentSnackBar()
-            ..showSnackBar(
-              SnackBar(content: Text(l10n.coffeeSavedSnackBarText),
-              ),
-            );
+        ScaffoldMessenger.of(context)
+          ..hideCurrentSnackBar()
+          ..showSnackBar(
+            SnackBar(content: Text(l10n.coffeeSavedSnackBarText),
+            ),
+          );
       },
       child: ElevatedButton(
-          onPressed: cubit.saveCurrentCoffee,
-          child: const LikeButton(),
-        ),
+        onPressed: cubit.saveCurrentCoffee,
+        child: const LikeButton(),
+      ),
     );
   }
 }
@@ -212,11 +126,12 @@ class LikeButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<CoffeeCubit, CoffeeState>(builder: (context, state) {
-      final buttonIcon = state.currentCoffee.isLiked
-          ? Icons.favorite : Icons.favorite_border_outlined;
-      return Icon(buttonIcon);
-    },
+    return BlocBuilder<CoffeeCubit, CoffeeState>(
+      builder: (context, state) {
+        final buttonIcon = state.currentCoffee.isLiked
+            ? Icons.favorite : Icons.favorite_border_outlined;
+        return Icon(buttonIcon);
+      },
     );
   }
 }

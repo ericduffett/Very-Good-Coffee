@@ -3,10 +3,10 @@ import 'package:coffee_repository/coffee_repository.dart' show CoffeeRepository;
 import 'package:equatable/equatable.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:json_annotation/json_annotation.dart';
-import 'package:very_good_coffee/home/models/models.dart';
+import 'package:very_good_coffee/coffee/models/models.dart';
 
 part 'coffee_cubit.g.dart';
-part 'coffee_state.dart';
+part '../../coffee/cubit/coffee_state.dart';
 
 class CoffeeCubit extends HydratedCubit<CoffeeState> {
   CoffeeCubit(this._coffeeRepository) : super(const CoffeeState());
@@ -14,9 +14,14 @@ class CoffeeCubit extends HydratedCubit<CoffeeState> {
   final CoffeeRepository _coffeeRepository;
 
   void deleteCoffee() {
-    final currentCoffee = state.currentCoffee.copyWith(
-      isLiked: state.currentCoffee != state.selectedCoffee,
-    );
+    var currentCoffee = state.currentCoffee;
+
+    if (currentCoffee.uid == state.selectedCoffee.uid) {
+      currentCoffee = state.currentCoffee.copyWith(
+        isLiked: state.currentCoffee != state.selectedCoffee,
+      );
+    }
+
 
     final savedCoffees = state.savedCoffees.map((c) => c).toList()
       ..removeWhere((coffee) => coffee.uid == state.selectedCoffee.uid);
