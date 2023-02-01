@@ -2,8 +2,8 @@ import 'dart:convert';
 import 'dart:typed_data';
 import 'package:coffee_api/src/models/coffee.dart';
 import 'package:coffee_api/src/models/coffee_data.dart';
-
 import 'package:http/http.dart' as http;
+import 'package:meta/meta.dart';
 
 /// {@template coffee_api}
 /// The Interface and models for an API providing access to coffee images.
@@ -16,6 +16,8 @@ class CoffeeApi {
   final http.Client _httpClient;
 
   ///Requests a random coffee url from coffee.alexflipnote.dev.
+  ///Note: This is simply a url for a random coffee image, not the image itself.
+  ///The actual image data is returned by the getCoffeeImageAsData() method.
   Future<Coffee> _generateRandomCoffee() async {
     final url = Uri.https(
       'coffee.alexflipnote.dev',
@@ -38,9 +40,8 @@ class CoffeeApi {
   ///Exposes a public method that returns an instance of coffee data that
   ///contains the image data as [Uint8List] and a uid [String]
   Future<CoffeeData> getCoffeeData() async {
-    // TODO(ericduffett): Functions below could throw. Do we need try catch?
     final coffee = await _generateRandomCoffee();
-    final data = await _getCoffeeImageAsData(coffee);
+    final data = await getCoffeeImageAsData(coffee);
     final uid = _extractUID(coffee.file);
     return CoffeeData(uid: uid, imageData: data);
   }
@@ -59,10 +60,9 @@ class CoffeeApi {
 
 
   ///Given an instance of coffee, returns image data as bytes.
-  Future<Uint8List> _getCoffeeImageAsData(Coffee coffee) async {
-    final randomCoffee = await _generateRandomCoffee();
-    final coffeeImageRequest = await http.get(randomCoffee.url);
-
+  @visibleForTesting
+  Future<Uint8List> getCoffeeImageAsData(Coffee coffee) async {
+    final coffeeImageRequest = await _httpClient.get(coffee.url);
     if (coffeeImageRequest.statusCode != 200) {
       throw CoffeeRequestFailure();
     }

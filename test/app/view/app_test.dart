@@ -3,9 +3,9 @@ import 'package:very_good_coffee/app/app.dart';
 
 void main() {
   group('App', () {
-    testWidgets('renders CounterPage', (tester) async {
+    testWidgets('renders HomePage', (tester) async {
       //await tester.pumpWidget(const CoffeeApp());
-      //expect(find.byType(CounterPage), findsOneWidget);
+      //expect(find.byType(HomePage), findsOneWidget);
     });
   });
 }
