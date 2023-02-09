@@ -32,11 +32,10 @@ class HomeView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = context.l10n;
+    //final l10n = context.l10n;
     final selectedTab = context.select((HomeCubit cubit) => cubit.state.tab);
     return Scaffold(
-      appBar: AppBar(title: Text(l10n.counterAppBarTitle),
-      ),
+      //appBar: AppBar(title: Text(l10n.counterAppBarTitle),),
       body: IndexedStack(
         index: selectedTab.index,
         children: const [CoffeePage(), SavedCoffeesPage()],),
@@ -46,12 +45,14 @@ class HomeView extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             _HomeTabButton(
+              tooltip: 'Home Tab',
               groupValue: selectedTab,
               value: HomeTab.home,
               icon: Icon(selectedTab == HomeTab.home ?
               Icons.coffee : Icons.coffee_outlined,),
             ),
             _HomeTabButton(
+              tooltip: 'Saved Tab',
               groupValue: selectedTab,
               value: HomeTab.saved,
               icon: Icon(selectedTab == HomeTab.saved ?
@@ -70,15 +71,19 @@ class _HomeTabButton extends StatelessWidget {
     required this.groupValue,
     required this.value,
     required this.icon,
+    required this.tooltip,
   });
+
 
   final HomeTab groupValue;
   final HomeTab value;
   final Widget icon;
+  final String tooltip;
 
   @override
   Widget build(BuildContext context) {
     return IconButton(
+      tooltip: tooltip,
       onPressed: () => context.read<HomeCubit>().setTab(value),
       iconSize: 32,
       color:

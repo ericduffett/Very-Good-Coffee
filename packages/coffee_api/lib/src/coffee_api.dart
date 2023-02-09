@@ -42,13 +42,14 @@ class CoffeeApi {
   Future<CoffeeData> getCoffeeData() async {
     final coffee = await _generateRandomCoffee();
     final data = await getCoffeeImageAsData(coffee);
-    final uid = _extractUID(coffee.file);
+    final uid = extractUID(coffee.file);
     return CoffeeData(uid: uid, imageData: data);
   }
 
   ///Given a url [String] extract the uid provided by the
   ///coffee.alexflipnote.dev API
-  String _extractUID(String url) {
+  @visibleForTesting
+  String extractUID(String url) {
     ///If url doesn't match expected pattern, return the entire url as the uid.
     if (!url.contains('https://coffee.alexflipnote.dev/') || !url.contains('_coffee')) {
       return url;

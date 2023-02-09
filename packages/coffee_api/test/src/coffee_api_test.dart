@@ -86,7 +86,8 @@ void main() {
               throwsA(isA<CoffeeNotFoundFailure>()),);
         });
 
-    test('throws a CoffeeNotFound failure when API returns unexpected pattern',
+    test('throws a CoffeeNotFound failure when API does not have '
+        'a file parameter',
             () async {
           final response = MockResponse();
           when(() => response.statusCode).thenReturn(200);
@@ -109,6 +110,23 @@ void main() {
       final actual = await apiClient.getCoffeeData();
       expect(actual, isA<CoffeeData>()
       .having((c) => c.uid, 'uid', '_QSYrowFdg0')
+          .having((c) => c.imageData, 'imageData', Uint8List.fromList([100])),
+      );
+    });
+
+    test("extracts UID when pattern doesn't match expectation", () async {
+      final response = MockResponse();
+      when(() => response.statusCode).thenReturn(200);
+      when(() => response.body).thenReturn('''
+      {
+        "file": "https://cofee.alexflipnote.dev/_QSYrowFdg0.jpg"
+      }
+      ''');
+      when(() => response.bodyBytes).thenReturn(Uint8List.fromList([100]));
+      when(() => httpClient.get(any())).thenAnswer((_) async => response);
+      final actual = await apiClient.getCoffeeData();
+      expect(actual, isA<CoffeeData>()
+          .having((c) => c.uid, 'uid', 'https://cofee.alexflipnote.dev/_QSYrowFdg0.jpg')
           .having((c) => c.imageData, 'imageData', Uint8List.fromList([100])),
       );
     });

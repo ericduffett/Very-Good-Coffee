@@ -18,10 +18,7 @@ class CoffeeView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final width = MediaQuery
-        .of(context)
-        .size
-        .width;
+    final width = MediaQuery.of(context).size.width;
     return Center(
       child: BlocBuilder<CoffeeCubit, CoffeeState>(
         buildWhen: (previous, current) {
@@ -49,29 +46,31 @@ class CoffeeView extends StatelessWidget {
               ],
             );
           }
-          return Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Image.memory(state.currentCoffee.imageData,
-                height: width,
-                width: width,
-                fit: BoxFit.cover,
-                //fit: BoxFit.cover,
-              ),
-              const SizedBox(
-                height: 16,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: const[
-                  LoadNewCoffeeButton(),
-                  SizedBox(
-                    width: 16,
-                  ),
-                  SaveCoffeeButton(),
-                ],
-              ),
-            ],
+          return SingleChildScrollView(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Image.memory(state.currentCoffee.imageData,
+                  height: width,
+                  width: width,
+                  fit: BoxFit.cover,
+                  //fit: BoxFit.cover,
+                ),
+                const SizedBox(
+                  height: 16,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: const[
+                    LoadNewCoffeeButton(),
+                    SizedBox(
+                      width: 16,
+                    ),
+                    SaveCoffeeButton(),
+                  ],
+                ),
+              ],
+            ),
           );
         },
       ),

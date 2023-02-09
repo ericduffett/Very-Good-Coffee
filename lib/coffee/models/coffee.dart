@@ -16,9 +16,6 @@ class Coffee extends Equatable {
   }) : _imageData = imageData,
         isLiked = isLiked ?? false;
 
-  // factory Coffee.fromJson(Map<String, dynamic> json) =>
-  //     _$CoffeeFromJson(json);
-
   factory Coffee.fromRepository(coffee_repository.Coffee coffee) {
     return Coffee(
       uid: coffee.uid,
