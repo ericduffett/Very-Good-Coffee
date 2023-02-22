@@ -31,12 +31,7 @@ class SavedCoffeesPage extends StatelessWidget {
                   onTap: () {
                     context.read<CoffeeCubit>().selectCoffee(index);
                     Navigator.of(context).push(
-                      MaterialPageRoute<SingleSavedCoffeeView>(builder: (context2) {
-                        return BlocProvider<CoffeeCubit>.value(
-                          value: context.read<CoffeeCubit>(),
-                          child: const SingleSavedCoffeeView(),
-                        );
-                      },),
+                      SingleSavedCoffeePage.route(context.read<CoffeeCubit>()),
                     );
                   },
                   child: Image.memory(

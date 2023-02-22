@@ -1,5 +1,5 @@
 import 'dart:typed_data';
-
+//ignore_for_file: prefer_const_constructors
 import 'package:bloc_test/bloc_test.dart';
 import 'package:coffee_repository/coffee_repository.dart' hide Coffee;
 import 'package:flutter/material.dart';
@@ -21,6 +21,25 @@ class MockCoffeeCubit extends MockCubit<CoffeeState> implements CoffeeCubit {}
 
 void main() {
   initHydratedStorage();
+
+  group('CoffeeApp', ()  {
+    late CoffeeRepository coffeeRepository;
+
+    setUp(() {
+      coffeeRepository = CoffeeRepository();
+    });
+
+    testWidgets('renders App', (tester) async {
+      await tester.pumpWidget(
+          RepositoryProvider.value(value: coffeeRepository,
+            child: CoffeeApp(
+              coffeeRepository: coffeeRepository,
+            ),
+          ),
+      );
+      expect(find.byType(CoffeeAppView), findsOneWidget);
+    });
+  });
 
   group('CoffeePage', () {
     late CoffeeRepository coffeeRepository;
@@ -259,5 +278,78 @@ void main() {
       await tester.pumpAndSettle();
       expect(find.byType(CoffeePage), findsOneWidget);
     });
+
+
+    testWidgets('calls fetch new coffee on reload tap', (tester) async {
+      when(() => coffeeCubit.state).thenReturn(const CoffeeState(
+        status: CoffeeStatus.success,
+        coffee: coffee,
+      ),);
+      when(() => coffeeCubit.fetchCoffeeImage()).thenAnswer((_) async {});
+      await tester.pumpWidget(
+        MultiBlocProvider(
+          providers: [
+            BlocProvider.value(value: coffeeCubit),
+            BlocProvider.value(value: homeCubit),
+          ],
+          child: const MaterialApp(
+            localizationsDelegates: AppLocalizations.localizationsDelegates,
+            locale: Locale('en'),
+            home: HomeView(),
+          ),
+        ),
+      );
+      
+      await tester.ensureVisible(find.byType(LoadNewCoffeeButton));
+      await tester.tap(find.byType(LoadNewCoffeeButton));
+      await tester.pumpAndSettle();
+      verify(() => coffeeCubit.fetchCoffeeImage()).called(1);
+    });
+
+    testWidgets('shows snackbar when coffee is saved', (tester) async {
+
+      final initialState = CoffeeState(
+        status: CoffeeStatus.success,
+        coffee: coffee,
+        savedCoffees: const <Coffee>[],
+        selectedCoffee: Coffee.empty,
+      );
+      when(() => coffeeCubit.state).thenReturn(initialState,);
+      when(() => coffeeCubit.saveCurrentCoffee()).thenAnswer((_) async {});
+      whenListen(coffeeCubit, Stream<CoffeeState>.fromIterable([
+        initialState,
+        initialState.copyWith(
+          savedCoffees: [coffee],
+          coffee: coffee.copyWith(
+            isLiked: true,
+          ),
+        )
+      ]),);
+
+      await tester.pumpWidget(
+        MultiBlocProvider(
+          providers: [
+            BlocProvider.value(value: coffeeCubit),
+            BlocProvider.value(value: homeCubit),
+          ],
+          child: const MaterialApp(
+            localizationsDelegates: AppLocalizations.localizationsDelegates,
+            locale: Locale('en'),
+            home: HomeView(),
+          ),
+        ),
+      );
+
+      await tester.ensureVisible(find.byType(SaveCoffeeButton));
+      await tester.tap(find.byType(SaveCoffeeButton));
+      await tester.pumpAndSettle();
+      expect(find.byType(ScaffoldMessenger), findsOneWidget);
+
+    });
+
+
   });
+  
+
+  
 }
