@@ -113,9 +113,10 @@ void main() {
         BlocProvider<CoffeeCubit>.value(
           value: coffeeCubit,
           child: MaterialApp(
-              localizationsDelegates: AppLocalizations.localizationsDelegates,
-              locale: Locale('en'),
-              home: Scaffold(body: SavedCoffeesPage()),),
+            localizationsDelegates: AppLocalizations.localizationsDelegates,
+            locale: Locale('en'),
+            home: Scaffold(body: SavedCoffeesPage()),
+          ),
         ),
       );
 
@@ -136,9 +137,10 @@ void main() {
         BlocProvider<CoffeeCubit>.value(
           value: coffeeCubit,
           child: MaterialApp(
-              localizationsDelegates: AppLocalizations.localizationsDelegates,
-              locale: Locale('en'),
-              home: Scaffold(body: SavedCoffeesPage()),),
+            localizationsDelegates: AppLocalizations.localizationsDelegates,
+            locale: Locale('en'),
+            home: Scaffold(body: SavedCoffeesPage()),
+          ),
         ),
       );
 

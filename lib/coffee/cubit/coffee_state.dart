@@ -2,13 +2,6 @@ part of '../../coffee/cubit/coffee_cubit.dart';
 
 enum CoffeeStatus { initial, loading, success, failure }
 
-// extension CoffeeStatusX on CoffeeStatus {
-//   bool get isInitial => this == CoffeeStatus.initial;
-//   bool get isLoading => this == CoffeeStatus.loading;
-//   bool get isSuccess => this == CoffeeStatus.success;
-//   bool get isFailure => this == CoffeeStatus.failure;
-// }
-
 @JsonSerializable()
 class CoffeeState extends Equatable {
   const CoffeeState({
