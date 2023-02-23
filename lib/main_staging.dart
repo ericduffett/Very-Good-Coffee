@@ -5,5 +5,5 @@ import 'package:very_good_coffee/bootstrap.dart';
 void main() {
   bootstrap(() => CoffeeApp(
         coffeeRepository: CoffeeRepository(),
-      ));
+      ),);
 }

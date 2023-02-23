@@ -8,7 +8,6 @@ import 'package:very_good_coffee/coffee/coffee.dart';
 import 'package:very_good_coffee/home/home.dart';
 import 'package:very_good_coffee/l10n/l10n.dart';
 import 'package:very_good_coffee/saved_coffees/saved_coffees.dart';
-import 'package:very_good_coffee/saved_coffees/view/saved_coffees_page.dart';
 
 import '../../helpers/hydrated_bloc.dart';
 
@@ -116,7 +115,7 @@ void main() {
           child: MaterialApp(
               localizationsDelegates: AppLocalizations.localizationsDelegates,
               locale: Locale('en'),
-              home: Scaffold(body: SavedCoffeesPage())),
+              home: Scaffold(body: SavedCoffeesPage()),),
         ),
       );
 
@@ -139,7 +138,7 @@ void main() {
           child: MaterialApp(
               localizationsDelegates: AppLocalizations.localizationsDelegates,
               locale: Locale('en'),
-              home: Scaffold(body: SavedCoffeesPage())),
+              home: Scaffold(body: SavedCoffeesPage()),),
         ),
       );
 
