@@ -6,7 +6,7 @@ import 'package:very_good_coffee/home/home.dart';
 import 'package:very_good_coffee/l10n/l10n.dart';
 
 class CoffeeApp extends StatelessWidget {
-  const CoffeeApp({super.key, required CoffeeRepository coffeeRepository})
+  const CoffeeApp({required CoffeeRepository coffeeRepository, super.key})
       : _coffeeRepository = coffeeRepository;
 
   final CoffeeRepository _coffeeRepository;
