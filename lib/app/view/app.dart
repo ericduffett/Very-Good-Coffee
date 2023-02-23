@@ -5,7 +5,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:very_good_coffee/home/home.dart';
 import 'package:very_good_coffee/l10n/l10n.dart';
 
-
 class CoffeeApp extends StatelessWidget {
   const CoffeeApp({super.key, required CoffeeRepository coffeeRepository})
       : _coffeeRepository = coffeeRepository;
@@ -30,9 +29,7 @@ class CoffeeAppView extends StatelessWidget {
       theme: ThemeData(
         useMaterial3: true,
         colorSchemeSeed: const Color(0xFF4a120d),
-        fontFamily: GoogleFonts
-            .kalam()
-            .fontFamily,
+        fontFamily: GoogleFonts.kalam().fontFamily,
       ),
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,

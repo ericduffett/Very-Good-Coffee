@@ -22,8 +22,6 @@ class SingleSavedCoffeePage extends StatelessWidget {
   }
 }
 
-
-
 class SingleSavedCoffeeView extends StatelessWidget {
   const SingleSavedCoffeeView({super.key});
 

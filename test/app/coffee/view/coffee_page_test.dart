@@ -1,4 +1,3 @@
-
 // ignore_for_file: prefer_const_constructors
 import 'package:bloc_test/bloc_test.dart';
 import 'package:coffee_repository/coffee_repository.dart' hide Coffee;
@@ -17,8 +16,7 @@ class MockCoffeeRepository extends Mock implements CoffeeRepository {}
 
 class MockCoffeeCubit extends MockCubit<CoffeeState> implements CoffeeCubit {}
 
-
-void main () {
+void main() {
   initHydratedStorage();
 
   group('CoffeeView', () {
@@ -92,7 +90,7 @@ void main () {
     ];
 
     const coffee = Coffee(
-      uid:'test123',
+      uid: 'test123',
       imageData: kTransparentImage,
     );
 
@@ -101,103 +99,100 @@ void main () {
       homeCubit = HomeCubit();
     });
 
-    testWidgets('renders welcome text during initial state',
-            (tester) async {
+    testWidgets('renders welcome text during initial state', (tester) async {
+      when(() => coffeeCubit.state).thenReturn(const CoffeeState());
+      await tester.pumpWidget(
+        MultiBlocProvider(
+          providers: [
+            BlocProvider.value(value: coffeeCubit),
+            BlocProvider.value(value: homeCubit),
+          ],
+          child: const MaterialApp(
+            localizationsDelegates: AppLocalizations.localizationsDelegates,
+            locale: Locale('en'),
+            home: HomeView(),
+          ),
+        ),
+      );
 
-          when(() => coffeeCubit.state).thenReturn(const CoffeeState());
-          await tester.pumpWidget(
-            MultiBlocProvider(
-              providers: [
-                BlocProvider.value(value: coffeeCubit),
-                BlocProvider.value(value: homeCubit),
-              ],
-              child: const MaterialApp(
-                localizationsDelegates: AppLocalizations.localizationsDelegates,
-                locale: Locale('en'),
-                home: HomeView(),
-              ),
-            ),
-          );
-
-          expect(find.text('Welcome to Very Good Coffee'), findsOneWidget);
-
-        });
+      expect(find.text('Welcome to Very Good Coffee'), findsOneWidget);
+    });
 
     testWidgets('renders circular progress indicator when loading',
-            (tester) async {
+        (tester) async {
+      when(() => coffeeCubit.state).thenReturn(
+        const CoffeeState(status: CoffeeStatus.loading),
+      );
+      await tester.pumpWidget(
+        MultiBlocProvider(
+          providers: [
+            BlocProvider.value(value: coffeeCubit),
+            BlocProvider.value(value: homeCubit),
+          ],
+          child: const MaterialApp(
+            localizationsDelegates: AppLocalizations.localizationsDelegates,
+            locale: Locale('en'),
+            home: HomeView(),
+          ),
+        ),
+      );
 
-          when(() => coffeeCubit.state).thenReturn(
-            const CoffeeState(status: CoffeeStatus.loading),);
-          await tester.pumpWidget(
-            MultiBlocProvider(
-              providers: [
-                BlocProvider.value(value: coffeeCubit),
-                BlocProvider.value(value: homeCubit),
-              ],
-              child: const MaterialApp(
-                localizationsDelegates: AppLocalizations.localizationsDelegates,
-                locale: Locale('en'),
-                home: HomeView(),
-              ),
-            ),
-          );
-
-          expect(find.byType(CircularProgressIndicator), findsOneWidget);
-
-        });
+      expect(find.byType(CircularProgressIndicator), findsOneWidget);
+    });
 
     testWidgets('renders image after successfully loading from API',
-            (tester) async {
-
-          when(() => coffeeCubit.state).thenReturn(
-            const CoffeeState(
-              status: CoffeeStatus.success,
-              coffee: coffee,
-            ),);
-          await tester.pumpWidget(
-            MultiBlocProvider(
-              providers: [
-                BlocProvider.value(
-                  value: coffeeCubit,),
-                BlocProvider.value(value: homeCubit),
-              ],
-              child: const MaterialApp(
-                localizationsDelegates: AppLocalizations.localizationsDelegates,
-                locale: Locale('en'),
-                home: HomeView(),
-              ),
+        (tester) async {
+      when(() => coffeeCubit.state).thenReturn(
+        const CoffeeState(
+          status: CoffeeStatus.success,
+          coffee: coffee,
+        ),
+      );
+      await tester.pumpWidget(
+        MultiBlocProvider(
+          providers: [
+            BlocProvider.value(
+              value: coffeeCubit,
             ),
-          );
+            BlocProvider.value(value: homeCubit),
+          ],
+          child: const MaterialApp(
+            localizationsDelegates: AppLocalizations.localizationsDelegates,
+            locale: Locale('en'),
+            home: HomeView(),
+          ),
+        ),
+      );
 
-          expect(find.byType(Image), findsOneWidget);
+      expect(find.byType(Image), findsOneWidget);
+    });
 
-        });
+    testWidgets('renders failure text on failure state', (tester) async {
+      when(() => coffeeCubit.state).thenReturn(
+        const CoffeeState(
+          status: CoffeeStatus.failure,
+        ),
+      );
+      await tester.pumpWidget(
+        MultiBlocProvider(
+          providers: [
+            BlocProvider.value(value: coffeeCubit),
+            BlocProvider.value(value: homeCubit),
+          ],
+          child: const MaterialApp(
+            localizationsDelegates: AppLocalizations.localizationsDelegates,
+            locale: Locale('en'),
+            home: HomeView(),
+          ),
+        ),
+      );
 
-    testWidgets('renders failure text on failure state',
-            (tester) async {
-
-          when(() => coffeeCubit.state).thenReturn(const CoffeeState(
-            status: CoffeeStatus.failure,
-          ),);
-          await tester.pumpWidget(
-            MultiBlocProvider(
-              providers: [
-                BlocProvider.value(value: coffeeCubit),
-                BlocProvider.value(value: homeCubit),
-              ],
-              child: const MaterialApp(
-                localizationsDelegates: AppLocalizations.localizationsDelegates,
-                locale: Locale('en'),
-                home: HomeView(),
-              ),
-            ),
-          );
-
-          expect(find.text('Failed to load image.\n'
-              'Please check your internet connection and try again.'),
-            findsOneWidget,);
-
-        });
+      expect(
+        find.text('Failed to load image.\n'
+            'Please check your internet connection and try again.'),
+        findsOneWidget,
+      );
+    });
 
     testWidgets('navigates to Saved page when save is tapped', (tester) async {
       when(() => coffeeCubit.state).thenReturn(const CoffeeState());
@@ -239,12 +234,13 @@ void main () {
       expect(find.byType(CoffeePage), findsOneWidget);
     });
 
-
     testWidgets('calls fetch new coffee on reload tap', (tester) async {
-      when(() => coffeeCubit.state).thenReturn(const CoffeeState(
-        status: CoffeeStatus.success,
-        coffee: coffee,
-      ),);
+      when(() => coffeeCubit.state).thenReturn(
+        const CoffeeState(
+          status: CoffeeStatus.success,
+          coffee: coffee,
+        ),
+      );
       when(() => coffeeCubit.fetchCoffeeImage()).thenAnswer((_) async {});
       await tester.pumpWidget(
         MultiBlocProvider(
@@ -267,24 +263,28 @@ void main () {
     });
 
     testWidgets('shows snackbar when coffee is saved', (tester) async {
-
       final initialState = CoffeeState(
         status: CoffeeStatus.success,
         coffee: coffee,
         savedCoffees: const <Coffee>[],
         selectedCoffee: Coffee.empty,
       );
-      when(() => coffeeCubit.state).thenReturn(initialState,);
-      when(() => coffeeCubit.saveCurrentCoffee()).thenAnswer((_) async {});
-      whenListen(coffeeCubit, Stream<CoffeeState>.fromIterable([
+      when(() => coffeeCubit.state).thenReturn(
         initialState,
-        initialState.copyWith(
-          savedCoffees: [coffee],
-          coffee: coffee.copyWith(
-            isLiked: true,
-          ),
-        )
-      ]),);
+      );
+      when(() => coffeeCubit.saveCurrentCoffee()).thenAnswer((_) async {});
+      whenListen(
+        coffeeCubit,
+        Stream<CoffeeState>.fromIterable([
+          initialState,
+          initialState.copyWith(
+            savedCoffees: [coffee],
+            coffee: coffee.copyWith(
+              isLiked: true,
+            ),
+          )
+        ]),
+      );
 
       await tester.pumpWidget(
         MultiBlocProvider(
@@ -304,9 +304,6 @@ void main () {
       await tester.tap(find.byType(SaveCoffeeButton));
       await tester.pumpAndSettle();
       expect(find.byType(ScaffoldMessenger), findsOneWidget);
-
     });
-
-
   });
 }

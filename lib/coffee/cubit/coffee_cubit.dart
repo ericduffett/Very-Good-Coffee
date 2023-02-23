@@ -1,4 +1,3 @@
-
 import 'package:coffee_repository/coffee_repository.dart' show CoffeeRepository;
 import 'package:equatable/equatable.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
@@ -22,7 +21,6 @@ class CoffeeCubit extends HydratedCubit<CoffeeState> {
       );
     }
 
-
     final savedCoffees = state.savedCoffees.map((c) => c).toList()
       ..removeWhere((coffee) => coffee.uid == state.selectedCoffee.uid);
 
@@ -42,19 +40,18 @@ class CoffeeCubit extends HydratedCubit<CoffeeState> {
         await _coffeeRepository.getRandomCoffee(),
       );
 
-      emit(state.copyWith(
-        status: CoffeeStatus.success,
-        coffee: coffee,
-      ),
+      emit(
+        state.copyWith(
+          status: CoffeeStatus.success,
+          coffee: coffee,
+        ),
       );
-
     } on Exception {
       emit(state.copyWith(status: CoffeeStatus.failure));
     }
   }
 
   Future<void> saveCurrentCoffee() async {
-
     final savedCoffees = state.savedCoffees.map((c) => c).toList();
     final currentCoffee = state.currentCoffee.copyWith(
       isLiked: true,
@@ -82,8 +79,7 @@ class CoffeeCubit extends HydratedCubit<CoffeeState> {
   }
 
   @override
-  CoffeeState fromJson(Map<String, dynamic> json) =>
-      CoffeeState.fromJson(json);
+  CoffeeState fromJson(Map<String, dynamic> json) => CoffeeState.fromJson(json);
 
   @override
   Map<String, dynamic> toJson(CoffeeState state) => state.toJson();

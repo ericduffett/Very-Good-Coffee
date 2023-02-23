@@ -15,7 +15,6 @@ class MockCoffeeCubit extends MockCubit<CoffeeState> implements CoffeeCubit {}
 
 class MockHomeCubit extends MockCubit<HomeState> implements HomeCubit {}
 
-
 void main() {
   initHydratedStorage();
   group('single saved coffee view', () {
@@ -97,14 +96,15 @@ void main() {
       coffeeCubit = MockCoffeeCubit();
     });
 
-
     testWidgets('calls delete coffee on delete tapped', (tester) async {
-      when(() => coffeeCubit.state).thenReturn(CoffeeState(
-        status: CoffeeStatus.success,
-        coffee: coffee,
-        savedCoffees: [coffee],
-        selectedCoffee: coffee,
-      ),);
+      when(() => coffeeCubit.state).thenReturn(
+        CoffeeState(
+          status: CoffeeStatus.success,
+          coffee: coffee,
+          savedCoffees: [coffee],
+          selectedCoffee: coffee,
+        ),
+      );
       when(() => coffeeCubit.deleteCoffee()).thenAnswer((_) async {});
       await tester.pumpWidget(
         BlocProvider<CoffeeCubit>.value(
@@ -112,7 +112,8 @@ void main() {
           child: MaterialApp(
             localizationsDelegates: AppLocalizations.localizationsDelegates,
             locale: Locale('en'),
-            home: Scaffold(body: SingleSavedCoffeePage()),),
+            home: Scaffold(body: SingleSavedCoffeePage()),
+          ),
         ),
       );
 
@@ -121,8 +122,6 @@ void main() {
       await tester.tap(find.byType(DeleteSavedCoffeeButton));
       await tester.pumpAndSettle();
       verify(() => coffeeCubit.deleteCoffee()).called(1);
-
     });
-
   });
 }

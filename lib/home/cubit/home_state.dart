@@ -7,7 +7,7 @@ class HomeState extends Equatable {
     this.tab = HomeTab.home,
   });
 
-final HomeTab tab;
+  final HomeTab tab;
 
   @override
   List<Object> get props => [tab];

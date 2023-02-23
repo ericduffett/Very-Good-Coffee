@@ -33,7 +33,6 @@ Future<void> bootstrap(FutureOr<Widget> Function() builder) async {
         : await getTemporaryDirectory(),
   );
 
-
   await runZonedGuarded(
     () async => runApp(await builder()),
     (error, stackTrace) => log(error.toString(), stackTrace: stackTrace),

@@ -1,4 +1,3 @@
-
 import 'dart:typed_data';
 import 'package:coffee_repository/coffee_repository.dart' as coffee_repository;
 import 'package:equatable/equatable.dart';
@@ -13,7 +12,7 @@ class Coffee extends Equatable {
     required this.uid,
     required List<int> imageData,
     bool? isLiked,
-  }) : _imageData = imageData,
+  })  : _imageData = imageData,
         isLiked = isLiked ?? false;
 
   factory Coffee.fromRepository(coffee_repository.Coffee coffee) {
@@ -23,7 +22,6 @@ class Coffee extends Equatable {
     );
   }
 
-
   static const empty = Coffee(
     uid: 'empty',
     imageData: [0],
@@ -32,7 +30,6 @@ class Coffee extends Equatable {
 
   static const noFavorites = <Coffee>[];
 
-
   final String uid;
 
   ///Stores image data as JSONSerializable List<int>
@@ -40,7 +37,6 @@ class Coffee extends Equatable {
 
   ///Stores whether the user has saved this image
   final bool isLiked;
-
 
   ///Getter that converts List<int> to [Uint8List] that can be used with
   ///Image.memory widget in Flutter
@@ -66,5 +62,4 @@ class Coffee extends Equatable {
 
   /// Converts this [Coffee] into a [JsonMap].
   JsonMap toJson() => _$CoffeeToJson(this);
-
 }

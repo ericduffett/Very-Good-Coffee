@@ -12,11 +12,9 @@ import 'package:very_good_coffee/saved_coffees/view/saved_coffees_page.dart';
 
 import '../../helpers/hydrated_bloc.dart';
 
-
 class MockCoffeeCubit extends MockCubit<CoffeeState> implements CoffeeCubit {}
 
 class MockHomeCubit extends MockCubit<HomeState> implements HomeCubit {}
-
 
 void main() {
   initHydratedStorage();
@@ -104,11 +102,13 @@ void main() {
 
     testWidgets('renders text when no saved images', (tester) async {
       //when(() => homeCubit.state).thenReturn(HomeState(tab: HomeTab.saved));
-      when(() => coffeeCubit.state).thenReturn(CoffeeState(
-        status: CoffeeStatus.success,
-        coffee: coffee,
-        savedCoffees: Coffee.noFavorites,
-      ),);
+      when(() => coffeeCubit.state).thenReturn(
+        CoffeeState(
+          status: CoffeeStatus.success,
+          coffee: coffee,
+          savedCoffees: Coffee.noFavorites,
+        ),
+      );
 
       await tester.pumpWidget(
         BlocProvider<CoffeeCubit>.value(
@@ -123,14 +123,15 @@ void main() {
       expect(find.text("You don't have any saved coffees."), findsOneWidget);
     });
 
-
     testWidgets('renders as many inkwell as saved coffees', (tester) async {
       //when(() => homeCubit.state).thenReturn(HomeState(tab: HomeTab.saved));
-      when(() => coffeeCubit.state).thenReturn(CoffeeState(
-        status: CoffeeStatus.success,
-        coffee: coffee,
-        savedCoffees: [coffee],
-      ),);
+      when(() => coffeeCubit.state).thenReturn(
+        CoffeeState(
+          status: CoffeeStatus.success,
+          coffee: coffee,
+          savedCoffees: [coffee],
+        ),
+      );
 
       await tester.pumpWidget(
         BlocProvider<CoffeeCubit>.value(
@@ -142,25 +143,30 @@ void main() {
         ),
       );
 
-      expect(find.byType(InkWell),
-        findsNWidgets(coffeeCubit.state.savedCoffees.length),);
+      expect(
+        find.byType(InkWell),
+        findsNWidgets(coffeeCubit.state.savedCoffees.length),
+      );
     });
 
     test('route to Single Coffee Page is a MaterialPageRoute', () {
-      expect(SingleSavedCoffeePage.route(coffeeCubit),
-          isA<MaterialPageRoute<void>>(),);
+      expect(
+        SingleSavedCoffeePage.route(coffeeCubit),
+        isA<MaterialPageRoute<void>>(),
+      );
     });
 
-
-    testWidgets('InkWell calls navigation to view single coffee.', (tester)
-    async {
+    testWidgets('InkWell calls navigation to view single coffee.',
+        (tester) async {
       //when(() => homeCubit.state).thenReturn(HomeState(tab: HomeTab.saved));
-      when(() => coffeeCubit.state).thenReturn(CoffeeState(
-        status: CoffeeStatus.success,
-        coffee: coffee,
-        savedCoffees: [coffee],
-        selectedCoffee: coffee,
-      ),);
+      when(() => coffeeCubit.state).thenReturn(
+        CoffeeState(
+          status: CoffeeStatus.success,
+          coffee: coffee,
+          savedCoffees: [coffee],
+          selectedCoffee: coffee,
+        ),
+      );
 
       await tester.pumpWidget(
         BlocProvider<CoffeeCubit>.value(
@@ -168,20 +174,20 @@ void main() {
           child: MaterialApp(
             localizationsDelegates: AppLocalizations.localizationsDelegates,
             locale: Locale('en'),
-            home: Scaffold(body: SavedCoffeesPage()),),
+            home: Scaffold(body: SavedCoffeesPage()),
+          ),
         ),
       );
 
-
-      expect(find.byType(InkWell),
-        findsNWidgets(coffeeCubit.state.savedCoffees.length),);
+      expect(
+        find.byType(InkWell),
+        findsNWidgets(coffeeCubit.state.savedCoffees.length),
+      );
 
       await tester.tap(find.byType(InkWell).first);
       verify(() => coffeeCubit.selectCoffee(0)).called(1);
       await tester.pumpAndSettle();
       expect(find.byType(SingleSavedCoffeeView), findsOneWidget);
-
-
     });
   });
 }

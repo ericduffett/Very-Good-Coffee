@@ -12,7 +12,6 @@ class CoffeePage extends StatelessWidget {
   }
 }
 
-
 class CoffeeView extends StatelessWidget {
   const CoffeeView({super.key});
 
@@ -34,14 +33,17 @@ class CoffeeView extends StatelessWidget {
             return Text(l10n.welcomeMessage);
           } else if (state.status == CoffeeStatus.loading) {
             return const CircularProgressIndicator();
-          }
-          else if (state.status == CoffeeStatus.failure) {
+          } else if (state.status == CoffeeStatus.failure) {
             return Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text(l10n.failedToLoadImageText,
-                  textAlign: TextAlign.center,),
-                const SizedBox(height: 16,),
+                Text(
+                  l10n.failedToLoadImageText,
+                  textAlign: TextAlign.center,
+                ),
+                const SizedBox(
+                  height: 16,
+                ),
                 const LoadNewCoffeeButton(),
               ],
             );
@@ -50,7 +52,8 @@ class CoffeeView extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Image.memory(state.currentCoffee.imageData,
+                Image.memory(
+                  state.currentCoffee.imageData,
                   height: width,
                   width: width,
                   fit: BoxFit.cover,
@@ -61,7 +64,7 @@ class CoffeeView extends StatelessWidget {
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
-                  children: const[
+                  children: const [
                     LoadNewCoffeeButton(),
                     SizedBox(
                       width: 16,
@@ -87,12 +90,13 @@ class SaveCoffeeButton extends StatelessWidget {
     final l10n = context.l10n;
     return BlocListener<CoffeeCubit, CoffeeState>(
       listenWhen: (previous, current) =>
-      previous.savedCoffees.length < current.savedCoffees.length,
+          previous.savedCoffees.length < current.savedCoffees.length,
       listener: (context, state) {
         ScaffoldMessenger.of(context)
           ..hideCurrentSnackBar()
           ..showSnackBar(
-            SnackBar(content: Text(l10n.coffeeSavedSnackBarText),
+            SnackBar(
+              content: Text(l10n.coffeeSavedSnackBarText),
             ),
           );
       },
@@ -112,13 +116,11 @@ class LoadNewCoffeeButton extends StatelessWidget {
     final l10n = context.l10n;
     return ElevatedButton.icon(
       label: Text(l10n.newCoffeeButtonText),
-      onPressed: () =>
-          context.read<CoffeeCubit>().fetchCoffeeImage(),
+      onPressed: () => context.read<CoffeeCubit>().fetchCoffeeImage(),
       icon: const Icon(Icons.refresh),
     );
   }
 }
-
 
 class LikeButton extends StatelessWidget {
   const LikeButton({super.key});
@@ -128,7 +130,8 @@ class LikeButton extends StatelessWidget {
     return BlocBuilder<CoffeeCubit, CoffeeState>(
       builder: (context, state) {
         final buttonIcon = state.currentCoffee.isLiked
-            ? Icons.favorite : Icons.favorite_border_outlined;
+            ? Icons.favorite
+            : Icons.favorite_border_outlined;
         return Icon(buttonIcon);
       },
     );

@@ -1,4 +1,3 @@
-
 // ignore_for_file: prefer_const_constructors
 import 'dart:typed_data';
 
@@ -9,7 +8,6 @@ import 'package:mocktail/mocktail.dart';
 import 'package:very_good_coffee/coffee/coffee.dart';
 
 import '../../../helpers/hydrated_bloc.dart';
-
 
 const uid = 'test';
 const kTransparentImage = <int>[
@@ -79,11 +77,10 @@ const kTransparentImage = <int>[
   0xAE,
 ];
 
-class MockCoffeeRepository extends Mock implements
-    coffee_repository.CoffeeRepository {}
+class MockCoffeeRepository extends Mock
+    implements coffee_repository.CoffeeRepository {}
 
 class MockCoffee extends Mock implements coffee_repository.Coffee {}
-
 
 void main() {
   initHydratedStorage();
@@ -93,13 +90,13 @@ void main() {
     late coffee_repository.CoffeeRepository coffeeRepository;
     late CoffeeCubit coffeeCubit;
 
-
     setUp(() async {
       coffee = MockCoffee();
       coffeeRepository = MockCoffeeRepository();
       when(() => coffee.uid).thenReturn(uid);
       when(() => coffee.imageData).thenReturn(
-        Uint8List.fromList(kTransparentImage),);
+        Uint8List.fromList(kTransparentImage),
+      );
       when(() => coffeeRepository.getRandomCoffee())
           .thenAnswer((_) async => coffee);
       coffeeCubit = CoffeeCubit(coffeeRepository);
@@ -110,19 +107,19 @@ void main() {
       expect(coffeeCubit.state, CoffeeState());
     });
 
-
-
     group('toJSon/fromJson', () {
       test('work properly', () {
         final coffeeCubit = CoffeeCubit(coffeeRepository);
-        expect(coffeeCubit.fromJson(coffeeCubit.toJson(coffeeCubit.state)),
-          coffeeCubit.state,);
+        expect(
+          coffeeCubit.fromJson(coffeeCubit.toJson(coffeeCubit.state)),
+          coffeeCubit.state,
+        );
       });
     });
 
     group('fetch coffee', () {
-      blocTest<CoffeeCubit, CoffeeState>
-        ('calls fetchCoffeeImage',
+      blocTest<CoffeeCubit, CoffeeState>(
+        'calls fetchCoffeeImage',
         build: () => coffeeCubit,
         act: (cubit) => cubit.fetchCoffeeImage(),
         verify: (_) {
@@ -130,38 +127,41 @@ void main() {
         },
       );
 
-      blocTest<CoffeeCubit, CoffeeState>
-        ('emits [loading, failure] when fetchCoffeeImage throws',
+      blocTest<CoffeeCubit, CoffeeState>(
+        'emits [loading, failure] when fetchCoffeeImage throws',
         setUp: () {
-          when(() => coffeeRepository.getRandomCoffee())
-              .thenThrow(Exception('no coffee for you'),);
+          when(() => coffeeRepository.getRandomCoffee()).thenThrow(
+            Exception('no coffee for you'),
+          );
         },
         build: () => coffeeCubit,
         act: (cubit) => cubit.fetchCoffeeImage(),
-        expect: () => <CoffeeState> [
+        expect: () => <CoffeeState>[
           CoffeeState(status: CoffeeStatus.loading),
           CoffeeState(status: CoffeeStatus.failure),
         ],
       );
 
-      blocTest<CoffeeCubit, CoffeeState>
-        ('emits [loading, success] when fetchCoffeeImage returns image',
+      blocTest<CoffeeCubit, CoffeeState>(
+        'emits [loading, success] when fetchCoffeeImage returns image',
         build: () => coffeeCubit,
         act: (cubit) => cubit.fetchCoffeeImage(),
-        expect: () => <dynamic> [
+        expect: () => <dynamic>[
           CoffeeState(status: CoffeeStatus.loading),
           isA<CoffeeState>()
               .having((c) => c.status, 'status', CoffeeStatus.success)
-              .having((c) => c.currentCoffee, 'currentCoffee',
-            isA<Coffee>()
-                .having((c) => c.uid, 'uid', uid)
-                .having((c) => c.imageData, 'imageData',
-              Uint8List.fromList(kTransparentImage),),
-          )
+              .having(
+                (c) => c.currentCoffee,
+                'currentCoffee',
+                isA<Coffee>().having((c) => c.uid, 'uid', uid).having(
+                      (c) => c.imageData,
+                      'imageData',
+                      Uint8List.fromList(kTransparentImage),
+                    ),
+              )
           //CoffeeState(status: CoffeeStatus.failure),
         ],
       );
-
     });
 
     group('delete coffee', () {
@@ -176,7 +176,8 @@ void main() {
         isLiked: true,
       );
       final savedCoffees = [coffee, coffee2];
-      blocTest<CoffeeCubit, CoffeeState>('deletes coffee from saved list',
+      blocTest<CoffeeCubit, CoffeeState>(
+        'deletes coffee from saved list',
         build: () => coffeeCubit,
         seed: () => CoffeeState(
           status: CoffeeStatus.success,
@@ -185,15 +186,22 @@ void main() {
           selectedCoffee: coffee,
         ),
         act: (cubit) => cubit.deleteCoffee(),
-        expect: () => <dynamic> [
+        expect: () => <dynamic>[
           isA<CoffeeState>()
               .having((c) => c.status, 'status', CoffeeStatus.success)
               .having((c) => c.selectedCoffee, 'selected coffee', Coffee.empty)
-              .having((c) => c.savedCoffees, 'saved coffees',
-            savedCoffees..removeWhere((cof) => cof.uid == coffee.uid),)
-              .having((c) => c.currentCoffee, 'current coffee', coffee.copyWith(
-            isLiked: false,
-          ),)
+              .having(
+                (c) => c.savedCoffees,
+                'saved coffees',
+                savedCoffees..removeWhere((cof) => cof.uid == coffee.uid),
+              )
+              .having(
+                (c) => c.currentCoffee,
+                'current coffee',
+                coffee.copyWith(
+                  isLiked: false,
+                ),
+              )
         ],
       );
     });
@@ -212,15 +220,18 @@ void main() {
         selectedCoffee: Coffee.empty,
       );
 
-      blocTest<CoffeeCubit, CoffeeState>('saves coffee',
+      blocTest<CoffeeCubit, CoffeeState>(
+        'saves coffee',
         build: () => coffeeCubit,
         seed: () => state,
         act: (cubit) => cubit.saveCurrentCoffee(),
-        expect: () => <CoffeeState> [
+        expect: () => <CoffeeState>[
           state.copyWith(
-            savedCoffees: <Coffee>[coffee.copyWith(
-              isLiked: true,
-            )],
+            savedCoffees: <Coffee>[
+              coffee.copyWith(
+                isLiked: true,
+              )
+            ],
             coffee: coffee.copyWith(
               isLiked: true,
             ),
@@ -229,7 +240,7 @@ void main() {
       );
     });
 
-    group('select coffee' , () {
+    group('select coffee', () {
       final coffee = Coffee(
         uid: uid,
         imageData: kTransparentImage,
@@ -243,18 +254,17 @@ void main() {
         selectedCoffee: Coffee.empty,
       );
 
-      blocTest<CoffeeCubit, CoffeeState>('select coffee function',
-          build: () => coffeeCubit,
-          seed: () => state,
-          act: (cubit) => cubit.selectCoffee(0),
-        expect: () => <CoffeeState> [
+      blocTest<CoffeeCubit, CoffeeState>(
+        'select coffee function',
+        build: () => coffeeCubit,
+        seed: () => state,
+        act: (cubit) => cubit.selectCoffee(0),
+        expect: () => <CoffeeState>[
           state.copyWith(
             selectedCoffee: state.savedCoffees[0],
           )
         ],
       );
     });
-
-
   });
 }

@@ -1,4 +1,3 @@
-
 //ignore_for_file: prefer_const_constructors
 import 'package:bloc_test/bloc_test.dart';
 import 'package:coffee_repository/coffee_repository.dart' hide Coffee;
@@ -13,7 +12,6 @@ import 'package:very_good_coffee/l10n/l10n.dart';
 
 import '../../helpers/hydrated_bloc.dart';
 
-
 class MockCoffeeRepository extends Mock implements CoffeeRepository {}
 
 class MockCoffeeCubit extends MockCubit<CoffeeState> implements CoffeeCubit {}
@@ -21,7 +19,7 @@ class MockCoffeeCubit extends MockCubit<CoffeeState> implements CoffeeCubit {}
 void main() {
   initHydratedStorage();
 
-  group('CoffeeApp', ()  {
+  group('CoffeeApp', () {
     late CoffeeRepository coffeeRepository;
 
     setUp(() {
@@ -30,11 +28,12 @@ void main() {
 
     testWidgets('renders App', (tester) async {
       await tester.pumpWidget(
-          RepositoryProvider.value(value: coffeeRepository,
-            child: CoffeeApp(
-              coffeeRepository: coffeeRepository,
-            ),
+        RepositoryProvider.value(
+          value: coffeeRepository,
+          child: CoffeeApp(
+            coffeeRepository: coffeeRepository,
           ),
+        ),
       );
       expect(find.byType(CoffeeAppView), findsOneWidget);
     });
@@ -49,15 +48,16 @@ void main() {
 
     testWidgets('renders HomePage', (tester) async {
       await tester.pumpWidget(
-          RepositoryProvider.value(value: coffeeRepository,
-            child: const MaterialApp(
-              home: HomePage(),
-              localizationsDelegates: AppLocalizations.localizationsDelegates,
-              locale: Locale('en'),
-            ),),
+        RepositoryProvider.value(
+          value: coffeeRepository,
+          child: const MaterialApp(
+            home: HomePage(),
+            localizationsDelegates: AppLocalizations.localizationsDelegates,
+            locale: Locale('en'),
+          ),
+        ),
       );
       expect(find.byType(HomeView), findsOneWidget);
     });
   });
-
 }

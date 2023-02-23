@@ -1,8 +1,6 @@
 part of '../../coffee/cubit/coffee_cubit.dart';
 
-
-
-enum CoffeeStatus {initial, loading, success, failure}
+enum CoffeeStatus { initial, loading, success, failure }
 
 // extension CoffeeStatusX on CoffeeStatus {
 //   bool get isInitial => this == CoffeeStatus.initial;
@@ -18,9 +16,9 @@ class CoffeeState extends Equatable {
     Coffee? coffee,
     List<Coffee>? savedCoffees,
     Coffee? selectedCoffee,
-  }) : currentCoffee = coffee ?? Coffee.empty,
-  savedCoffees = savedCoffees ?? Coffee.noFavorites,
-  selectedCoffee = selectedCoffee ?? Coffee.empty;
+  })  : currentCoffee = coffee ?? Coffee.empty,
+        savedCoffees = savedCoffees ?? Coffee.noFavorites,
+        selectedCoffee = selectedCoffee ?? Coffee.empty;
 
   factory CoffeeState.fromJson(Map<String, dynamic> json) =>
       _$CoffeeStateFromJson(json);
@@ -30,14 +28,12 @@ class CoffeeState extends Equatable {
   final List<Coffee> savedCoffees;
   final Coffee selectedCoffee;
 
-
   CoffeeState copyWith({
     CoffeeStatus? status,
     Coffee? coffee,
     List<Coffee>? savedCoffees,
     Coffee? selectedCoffee,
-}) {
-
+  }) {
     return CoffeeState(
       status: status ?? this.status,
       coffee: coffee ?? currentCoffee,
@@ -49,7 +45,6 @@ class CoffeeState extends Equatable {
   Map<String, dynamic> toJson() => _$CoffeeStateToJson(this);
 
   @override
-  List<Object?> get props => [
-    status, currentCoffee, savedCoffees, selectedCoffee
-  ];
+  List<Object?> get props =>
+      [status, currentCoffee, savedCoffees, selectedCoffee];
 }

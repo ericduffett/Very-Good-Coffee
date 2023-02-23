@@ -1,11 +1,9 @@
-
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter_test/flutter_test.dart';
 import 'package:very_good_coffee/coffee/coffee.dart';
 
 void main() {
-
   const kTransparentImage = <int>[
     0x89,
     0x50,
@@ -82,6 +80,4 @@ void main() {
   test('copyWith works for all properties', () async {
     expect(coffee, coffee.copyWith());
   });
-
-
 }
