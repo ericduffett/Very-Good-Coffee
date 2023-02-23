@@ -27,15 +27,8 @@ class SingleSavedCoffeePage extends StatelessWidget {
 class SingleSavedCoffeeView extends StatelessWidget {
   const SingleSavedCoffeeView({super.key});
 
-  // static Route<void> route() {
-  //   return MaterialPageRoute(
-  //     builder: (_) => const SingleSavedCoffeeView(),
-  //   );
-  // }
-
   @override
   Widget build(BuildContext context) {
-    final selectedCoffee = context.read<CoffeeCubit>().state.selectedCoffee;
     final width = MediaQuery.of(context).size.width;
     return Scaffold(
       appBar: AppBar(),
@@ -43,7 +36,7 @@ class SingleSavedCoffeeView extends StatelessWidget {
         child: Column(
           children: [
             Image.memory(
-              selectedCoffee.imageData,
+              context.read<CoffeeCubit>().state.selectedCoffee.imageData,
               height: width,
               width: width,
               fit: BoxFit.cover,
@@ -75,4 +68,3 @@ class DeleteSavedCoffeeButton extends StatelessWidget {
     );
   }
 }
-

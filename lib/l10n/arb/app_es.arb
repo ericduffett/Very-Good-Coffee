@@ -1,19 +1,39 @@
 {
     "@@locale": "es",
-    "counterAppBarTitle": "Contador",
-    "@counterAppBarTitle": {
-        "description": "Texto mostrado en la AppBar de la página del contador"
+    "appBarTitle": "Muy Bueno Café",
+    "@appBarTitle": {
+        "description": "Texto mostrado en la AppBar de la página del Cafe"
     },
-    "newCoffeeButtonText": "New Coffee",
-    "@newCoffeeButtonText": {
-         "description": "Text shown in the reload coffee image button"
-    },
-    "coffeeSavedSnackBarText": "Coffee Saved",
+    "coffeeSavedSnackBarText": "Café Guardado",
     "@coffeeSavedSnackBarText": {
-        "description": "Text shown in SnackBar when a coffee is saved"
+        "description": "Texto que se muestra en SnackBar cuando se guarda un café"
     },
-    "viewSavedCoffeeRemoveCoffeeButtonText": "Remove",
+    "failedToLoadImageText": "No se pudo cargar la imagen.\nComprueba tu conexión a Internet e inténtalo de nuevo.",
+    "@failedToLoadImageText": {
+        "description": "Texto que se muestra si la solicitud de la API falla."
+    },
+    "homeTabToolTip": "pestaña de inicio",
+    "@homeTabToolTip": {
+        "description": "pestaña de inicio tooltip"
+    },
+    "newCoffeeButtonText": "Café Nuevo",
+    "@newCoffeeButtonText": {
+         "description": "Texto que se muestra en el botón de imagen de recargar café"
+    },
+    "noSavedCoffeesText": "No tienes cafés guardados.",
+    "@noSavedCoffeesText": {
+        "description": "Texto que se muestra en la página guardada cuando el usuario no ha guardado ningún café."
+    },
+    "savedTabToolTip": "pestaña guardada",
+    "@savedTabToolTip": {
+        "description": "pestaña guardada tooltip"
+    },
+    "viewSavedCoffeeRemoveCoffeeButtonText": "Eliminar",
     "@viewSavedCoffeeRemoveCoffeeButtonText": {
-        "description": "Text shown in the remove coffee button"
+        "description": "Texto que se muestra en el botón Eliminar café"
+    },
+    "welcomeMessage": "Bienvenido a Muy Buen Café",
+    "@welcomeMessage": {
+        "description": "Texto mostrado en estado inicial antes de carga."
     }
 }

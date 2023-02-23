@@ -1,19 +1,39 @@
 {
     "@@locale": "en",
-    "counterAppBarTitle": "Very Good Coffee",
-    "@counterAppBarTitle": {
+    "appBarTitle": "Very Good Coffee",
+    "@appBarTitle": {
         "description": "Text shown in the AppBar of the Coffee Page"
-    },
-    "newCoffeeButtonText": "New Coffee",
-    "@newCoffeeButtonText": {
-        "description": "Text shown in the reload coffee image button"
     },
     "coffeeSavedSnackBarText": "Coffee Saved",
     "@coffeeSavedSnackBarText": {
         "description": "Text shown in SnackBar when a coffee is saved"
     },
+    "failedToLoadImageText": "Failed to load image.\nPlease check your internet connection and try again.",
+    "@failedToLoadImageText": {
+        "description": "Text shown if API request fails."
+    },
+    "homeTabToolTip": "Home Tab",
+    "@homeTabToolTip": {
+        "description": "Home Tab tooltip"
+    },
+    "newCoffeeButtonText": "New Coffee",
+    "@newCoffeeButtonText": {
+        "description": "Text shown in the reload coffee image button"
+    },
+    "noSavedCoffeesText": "You don't have any saved coffees.",
+    "@noSavedCoffeesText": {
+        "description": "Text displayed on saved page when user hasn't saved any coffees."
+    },
+    "savedTabToolTip": "Saved Tab",
+    "@savedTabToolTip": {
+        "description": "Saved Tab tooltip"
+    },
     "viewSavedCoffeeRemoveCoffeeButtonText": "Remove",
     "@viewSavedCoffeeRemoveCoffeeButtonText": {
         "description": "Text shown in the remove coffee button"
+    },
+    "welcomeMessage": "Welcome to Very Good Coffee",
+    "@welcomeMessage": {
+        "description": "Text shown in initial state before loading."
     }
 }

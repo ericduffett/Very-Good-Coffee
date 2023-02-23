@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:very_good_coffee/coffee/cubit/coffee_cubit.dart';
+import 'package:very_good_coffee/l10n/l10n.dart';
 import 'package:very_good_coffee/saved_coffees/view/single_saved_coffee_view.dart';
 
 class SavedCoffeesPage extends StatelessWidget {
@@ -17,30 +18,29 @@ class SavedCoffeesPage extends StatelessWidget {
         }
       },
       builder: (context, state) {
-        return GridView.count(
-          crossAxisCount: 3,
-          children: List.generate(
-              state.savedCoffees.isEmpty ? 1 : state.savedCoffees.length,
-                  (index) {
-                if (state.savedCoffees.isEmpty) {
-                  return const Center(child:
-                  Text("You don't have any saved coffees."),
+        if (state.savedCoffees.isEmpty) {
+          return Center(
+            child: Text(context.l10n.noSavedCoffeesText),
+          );
+        } else {
+          return GridView.count(
+            crossAxisCount: 3,
+            children: List.generate(state.savedCoffees.length, (index) {
+              return InkWell(
+                onTap: () {
+                  context.read<CoffeeCubit>().selectCoffee(index);
+                  Navigator.of(context).push(
+                    SingleSavedCoffeePage.route(context.read<CoffeeCubit>()),
                   );
-                }
-                return InkWell(
-                  onTap: () {
-                    context.read<CoffeeCubit>().selectCoffee(index);
-                    Navigator.of(context).push(
-                      SingleSavedCoffeePage.route(context.read<CoffeeCubit>()),
-                    );
-                  },
-                  child: Image.memory(
-                    state.savedCoffees[index].imageData,
-                    fit: BoxFit.cover,
-                  ),
-                );
-              }),
-        );
+                },
+                child: Image.memory(
+                  state.savedCoffees[index].imageData,
+                  fit: BoxFit.cover,
+                ),
+              );
+            }),
+          );
+        }
       },
     );
   }

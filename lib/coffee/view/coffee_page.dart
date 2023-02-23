@@ -19,6 +19,7 @@ class CoffeeView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
+    final l10n = context.l10n;
     return Center(
       child: BlocBuilder<CoffeeCubit, CoffeeState>(
         buildWhen: (previous, current) {
@@ -30,19 +31,18 @@ class CoffeeView extends StatelessWidget {
         },
         builder: (context, state) {
           if (state.status == CoffeeStatus.initial) {
-            return const Text('Welcome to Very Good Coffee');
+            return Text(l10n.welcomeMessage);
           } else if (state.status == CoffeeStatus.loading) {
             return const CircularProgressIndicator();
           }
           else if (state.status == CoffeeStatus.failure) {
             return Column(
               mainAxisAlignment: MainAxisAlignment.center,
-              children: const [
-                Text('Failed to load image.\n'
-                    'Please check your internet connection and try again.',
+              children: [
+                Text(l10n.failedToLoadImageText,
                   textAlign: TextAlign.center,),
-                SizedBox(height: 16,),
-                LoadNewCoffeeButton(),
+                const SizedBox(height: 16,),
+                const LoadNewCoffeeButton(),
               ],
             );
           }

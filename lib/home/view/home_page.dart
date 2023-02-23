@@ -32,27 +32,27 @@ class HomeView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    //final l10n = context.l10n;
+    final l10n = context.l10n;
     final selectedTab = context.select((HomeCubit cubit) => cubit.state.tab);
     return Scaffold(
-      //appBar: AppBar(title: Text(l10n.counterAppBarTitle),),
+      appBar: AppBar(title: Text(l10n.appBarTitle),),
       body: IndexedStack(
         index: selectedTab.index,
         children: const [CoffeePage(), SavedCoffeesPage()],),
       bottomNavigationBar: BottomAppBar(
-        shape: const CircularNotchedRectangle(),
+        padding:  EdgeInsets.zero,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
+          children: <_HomeTabButton>[
             _HomeTabButton(
-              tooltip: 'Home Tab',
+              tooltip: l10n.homeTabToolTip,
               groupValue: selectedTab,
               value: HomeTab.home,
               icon: Icon(selectedTab == HomeTab.home ?
               Icons.coffee : Icons.coffee_outlined,),
             ),
             _HomeTabButton(
-              tooltip: 'Saved Tab',
+              tooltip: l10n.savedTabToolTip,
               groupValue: selectedTab,
               value: HomeTab.saved,
               icon: Icon(selectedTab == HomeTab.saved ?
