@@ -34,7 +34,6 @@ class CoffeeApi {
     if (!coffeeJson.containsKey('file')) throw CoffeeNotFoundFailure();
 
     return Coffee.fromJson(coffeeJson as Map<String, dynamic>);
-
   }
 
   ///Exposes a public method that returns an instance of coffee data that
@@ -51,14 +50,14 @@ class CoffeeApi {
   @visibleForTesting
   String extractUID(String url) {
     ///If url doesn't match expected pattern, return the entire url as the uid.
-    if (!url.contains('https://coffee.alexflipnote.dev/') || !url.contains('_coffee')) {
+    if (!url.contains('https://coffee.alexflipnote.dev/') ||
+        !url.contains('_coffee')) {
       return url;
     }
     final dropMainURL = url.replaceAll('https://coffee.alexflipnote.dev/', '');
     final cleanUID = dropMainURL.substring(0, dropMainURL.indexOf('_coffee'));
     return cleanUID;
   }
-
 
   ///Given an instance of coffee, returns image data as bytes.
   @visibleForTesting
@@ -70,7 +69,6 @@ class CoffeeApi {
 
     return coffeeImageRequest.bodyBytes;
   }
-
 }
 
 ///Exception thrown when there is a network error.

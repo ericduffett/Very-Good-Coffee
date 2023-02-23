@@ -1,4 +1,3 @@
-
 import 'dart:typed_data';
 
 ///Class for handling unique coffee images with image data and uid
@@ -11,6 +10,7 @@ class CoffeeData {
 
   ///Unique ID for image
   final String uid;
+
   ///Image data as bytes
   final Uint8List imageData;
 }

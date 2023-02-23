@@ -11,12 +11,9 @@ class CoffeeRepository {
 
   final CoffeeApi _coffeeApi;
 
-
   ///Method for repository to request random coffee from the API.
   Future<Coffee> getRandomCoffee() async {
     final coffeeData = await _coffeeApi.getCoffeeData();
     return Coffee(uid: coffeeData.uid, imageData: coffeeData.imageData);
   }
-
-
 }

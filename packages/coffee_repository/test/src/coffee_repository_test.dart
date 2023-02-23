@@ -13,11 +13,8 @@ class MockCoffee extends Mock implements Coffee {}
 
 class MockCoffeeData extends Mock implements coffee_api.CoffeeData {}
 
-
-
 void main() {
   group('CoffeeRepository', () {
-
     late coffee_api.CoffeeApi coffeeApi;
     late CoffeeRepository coffeeRepository;
 
@@ -44,9 +41,10 @@ void main() {
       final exception = Exception('could not get coffee');
       when(() => coffeeApi.getCoffeeData()).thenThrow(exception);
       expect(
-          () async =>  coffeeRepository.getRandomCoffee(), throwsA(exception),
+        () async => coffeeRepository.getRandomCoffee(),
+        throwsA(exception),
       );
-    } );
+    });
 
     test('returns correct construction of Coffee on getRandomCoffee', () async {
       const uid = 'testUID';
@@ -59,6 +57,5 @@ void main() {
       expect(actual.uid, 'testUID');
       expect(actual.imageData, Uint8List.fromList([0, 1, 2]));
     });
-
   });
 }

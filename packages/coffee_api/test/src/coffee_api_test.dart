@@ -43,10 +43,13 @@ void main() {
           await apiClient.getCoffeeData();
         } catch (_) {}
         verify(
-              () => httpClient.get(Uri.https(
-            'coffee.alexflipnote.dev',
-            '/random.json',
-          ),),).called(1);
+          () => httpClient.get(
+            Uri.https(
+              'coffee.alexflipnote.dev',
+              '/random.json',
+            ),
+          ),
+        ).called(1);
       });
 
       test('throws CoffeeRequestFailure on non-200 response', () async {
@@ -54,48 +57,50 @@ void main() {
         when(() => response.statusCode).thenReturn(400);
         when(() => httpClient.get(any())).thenAnswer((_) async => response);
         expect(
-              () async => apiClient.getCoffeeData(),
+          () async => apiClient.getCoffeeData(),
           throwsA(isA<CoffeeRequestFailure>()),
         );
       });
 
-      test('throws a CoffeeRequestFailure if file url provided fails to connect'
-          ,() async {
-            final response = MockResponse();
-            final mockCoffee = Coffee(
-                file: 'https://coffee.alexflipnote.dev/_QSYrowFdg0_coffee.png',);
-            when(() => response.statusCode).thenReturn(400);
-            when(() => httpClient.get(any())).thenAnswer((_) async => response);
-            expect(
-                  () async => apiClient.getCoffeeImageAsData(mockCoffee),
-              throwsA(isA<CoffeeRequestFailure>()),
-            );
-
-          }
-      );
-
+      test(
+          'throws a CoffeeRequestFailure if file url provided fails to connect',
+          () async {
+        final response = MockResponse();
+        final mockCoffee = Coffee(
+          file: 'https://coffee.alexflipnote.dev/_QSYrowFdg0_coffee.png',
+        );
+        when(() => response.statusCode).thenReturn(400);
+        when(() => httpClient.get(any())).thenAnswer((_) async => response);
+        expect(
+          () async => apiClient.getCoffeeImageAsData(mockCoffee),
+          throwsA(isA<CoffeeRequestFailure>()),
+        );
+      });
     });
 
-    test('throws a CoffeeNotFound failure on error response',
-            () async {
-          final response = MockResponse();
-          when(() => response.statusCode).thenReturn(200);
-          when(() => response.body).thenReturn('{}');
-          when(() => httpClient.get(any())).thenAnswer((_) async => response);
-          await expectLater(apiClient.getCoffeeData(),
-              throwsA(isA<CoffeeNotFoundFailure>()),);
-        });
+    test('throws a CoffeeNotFound failure on error response', () async {
+      final response = MockResponse();
+      when(() => response.statusCode).thenReturn(200);
+      when(() => response.body).thenReturn('{}');
+      when(() => httpClient.get(any())).thenAnswer((_) async => response);
+      await expectLater(
+        apiClient.getCoffeeData(),
+        throwsA(isA<CoffeeNotFoundFailure>()),
+      );
+    });
 
-    test('throws a CoffeeNotFound failure when API does not have '
-        'a file parameter',
-            () async {
-          final response = MockResponse();
-          when(() => response.statusCode).thenReturn(200);
-          when(() => response.body).thenReturn('{"url": ""}');
-          when(() => httpClient.get(any())).thenAnswer((_) async => response);
-          await expectLater(apiClient.getCoffeeData(),
-            throwsA(isA<CoffeeNotFoundFailure>()),);
-        });
+    test(
+        'throws a CoffeeNotFound failure when API does not have '
+        'a file parameter', () async {
+      final response = MockResponse();
+      when(() => response.statusCode).thenReturn(200);
+      when(() => response.body).thenReturn('{"url": ""}');
+      when(() => httpClient.get(any())).thenAnswer((_) async => response);
+      await expectLater(
+        apiClient.getCoffeeData(),
+        throwsA(isA<CoffeeNotFoundFailure>()),
+      );
+    });
 
     test('returns valid Coffee response', () async {
       final response = MockResponse();
@@ -108,9 +113,11 @@ void main() {
       when(() => response.bodyBytes).thenReturn(Uint8List.fromList([100]));
       when(() => httpClient.get(any())).thenAnswer((_) async => response);
       final actual = await apiClient.getCoffeeData();
-      expect(actual, isA<CoffeeData>()
-      .having((c) => c.uid, 'uid', '_QSYrowFdg0')
-          .having((c) => c.imageData, 'imageData', Uint8List.fromList([100])),
+      expect(
+        actual,
+        isA<CoffeeData>()
+            .having((c) => c.uid, 'uid', '_QSYrowFdg0')
+            .having((c) => c.imageData, 'imageData', Uint8List.fromList([100])),
       );
     });
 
@@ -125,9 +132,12 @@ void main() {
       when(() => response.bodyBytes).thenReturn(Uint8List.fromList([100]));
       when(() => httpClient.get(any())).thenAnswer((_) async => response);
       final actual = await apiClient.getCoffeeData();
-      expect(actual, isA<CoffeeData>()
-          .having((c) => c.uid, 'uid', 'https://cofee.alexflipnote.dev/_QSYrowFdg0.jpg')
-          .having((c) => c.imageData, 'imageData', Uint8List.fromList([100])),
+      expect(
+        actual,
+        isA<CoffeeData>()
+            .having((c) => c.uid, 'uid',
+                'https://cofee.alexflipnote.dev/_QSYrowFdg0.jpg')
+            .having((c) => c.imageData, 'imageData', Uint8List.fromList([100])),
       );
     });
   });

@@ -7,6 +7,7 @@ class Coffee {
 
   ///Unique identifier needed to avoid duplicates
   final String uid;
+
   ///Image Data as bytes
   final Uint8List imageData;
 }

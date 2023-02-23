@@ -1,4 +1,3 @@
-
 import 'package:json_annotation/json_annotation.dart';
 
 part 'coffee.g.dart';
@@ -10,8 +9,7 @@ class Coffee {
   const Coffee({required this.file});
 
   ///Construct new coffee instance from JSON
-  factory Coffee.fromJson(Map<String, dynamic> json) =>
-      _$CoffeeFromJson(json);
+  factory Coffee.fromJson(Map<String, dynamic> json) => _$CoffeeFromJson(json);
 
   ///Returns Uri.https instance for use in http request
   Uri get url {
