@@ -13,7 +13,7 @@ Coffee _$CoffeeFromJson(Map<String, dynamic> json) => $checkedCreate(
         final val = Coffee(
           uid: $checkedConvert('uid', (v) => v as String),
           imageData: $checkedConvert('image_data',
-              (v) => (v as List<dynamic>).map((e) => e as int).toList()),
+              (v) => (v as List<dynamic>).map((e) => e as int).toList(),),
           isLiked: $checkedConvert('is_liked', (v) => v as bool?),
         );
         return val;
