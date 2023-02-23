@@ -1,10 +1,10 @@
-#name: very_good_coffee
-#
-#on: [pull_request, push]
-#
-#jobs:
-#  semantic-pull-request:
-#    uses: VeryGoodOpenSource/very_good_workflows/.github/workflows/semantic_pull_request.yml@v1
+name: very_good_coffee
 
-#  build:
-#    uses: VeryGoodOpenSource/very_good_workflows/.github/workflows/flutter_package.yml@v1
+on: [pull_request, push]
+
+jobs:
+  semantic-pull-request:
+    uses: VeryGoodOpenSource/very_good_workflows/.github/workflows/semantic_pull_request.yml@v1
+
+  build:
+    uses: VeryGoodOpenSource/very_good_workflows/.github/workflows/flutter_package.yml@v1
