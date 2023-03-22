@@ -8,7 +8,7 @@ environment:
   flutter: 3.7.1
 
 dependencies:
-  bloc: ^8.1.0
+  bloc: ^8.1.1
   coffee_api:
     path: packages/coffee_api
   coffee_repository:
@@ -16,23 +16,23 @@ dependencies:
   equatable: ^2.0.5
   flutter:
     sdk: flutter
-  flutter_bloc: ^8.1.1
+  flutter_bloc: ^8.1.2
   flutter_localizations:
     sdk: flutter
-  google_fonts: ^4.0.1
-  hydrated_bloc: ^9.0.0
+  google_fonts: ^4.0.3
+  hydrated_bloc: ^9.1.0
   intl: ^0.17.0
   json_annotation: ^4.8.0
-  path_provider: ^2.0.13
+  path_provider: ^2.0.14
 
 
 
 dev_dependencies:
-  bloc_test: ^9.1.0
+  bloc_test: ^9.1.1
   build_runner: ^2.3.3
   flutter_test:
     sdk: flutter
-  json_serializable: ^6.6.0
+  json_serializable: ^6.6.1
   mocktail: ^0.3.0
   very_good_analysis: ^4.0.0+1
 
